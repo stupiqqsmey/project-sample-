@@ -20,7 +20,9 @@ import ContactPage from './pages/ContactPage';
 import Login from './Components/AuthComponents/Login';
 import SignUp from './Components/AuthComponents/SignUp';
 import ForgotPassword from './Components/AuthComponents/ForgotPassword';
-import FormComponent from './Components/FormCompponents/FormComponent';
+import AddFormProduct from "./Components/FormCompponents/AddFormProduct.jsx";
+
+
 
 // --- Layout Components ---
 // eslint-disable-next-line react-refresh/only-export-components
@@ -40,11 +42,14 @@ const router = createBrowserRouter([
         element: <MainPageLayout/>,
         children: [
             {path: '/', element: <HomePage/>},
-            {path: '/products', element: <ProductPage/>},
+            {path: '/products/', element: <ProductPage/>},
             {path: '/products/:id', element: <DetailPage/>},
             {path: '/about', element: <AboutPage/>},
             {path: '/contact', element: <ContactPage/>},
-            {path: '/form', element: <FormComponent/>},
+            {path: '/form', element: <AddFormProduct/>},
+            {path: '/products/new', element: <AddFormProduct mode="create" />},
+
+
         ],
     },
     {

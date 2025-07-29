@@ -7,6 +7,7 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 
 // Create and configure the Redux store
 const store = configureStore({
+
     reducer: {
         [ecommerceApi.reducerPath]: ecommerceApi.reducer,
         counter: counterReducer,
