@@ -1,10 +1,11 @@
+// redux/store.js
+
 import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from '../redux/features/counter/couterSlice.js';
 import { ecommerceApi } from './api.js';
+import counterReducer from '../redux/features/counter/counterSlice.js';
 import { setupListeners } from '@reduxjs/toolkit/query';
 
-
-// ✅ Create the store using Redux Toolkit
+// Create and configure the Redux store
 const store = configureStore({
     reducer: {
         [ecommerceApi.reducerPath]: ecommerceApi.reducer,

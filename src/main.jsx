@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {createBrowserRouter, Outlet, RouterProvider} from 'react-router-dom';
-import { Provider } from 'react-redux';
+import {Provider} from 'react-redux';
 import store from '../src/redux/store.js';
 
 import './index.css';
@@ -20,37 +20,39 @@ import ContactPage from './pages/ContactPage';
 import Login from './Components/AuthComponents/Login';
 import SignUp from './Components/AuthComponents/SignUp';
 import ForgotPassword from './Components/AuthComponents/ForgotPassword';
+import FormComponent from './Components/FormCompponents/FormComponent';
 
 // --- Layout Components ---
 // eslint-disable-next-line react-refresh/only-export-components
 const MainPageLayout = () => (
     <>
-        <Navbar />
+        <Navbar/>
         <main className="container mx-auto p-4">
-            <Outlet />
+            <Outlet/>
         </main>
-        <Footer />
+        <Footer/>
     </>
 );
 
 // --- Define Routes with createBrowserRouter ---
 const router = createBrowserRouter([
     {
-        element: <MainPageLayout />,
+        element: <MainPageLayout/>,
         children: [
-            { path: '/', element: <HomePage /> },
-            { path: '/products', element: <ProductPage /> },
-            { path: '/products/:id', element: <DetailPage /> },
-            { path: '/about', element: <AboutPage /> },
-            { path: '/contact', element: <ContactPage /> },
+            {path: '/', element: <HomePage/>},
+            {path: '/products', element: <ProductPage/>},
+            {path: '/products/:id', element: <DetailPage/>},
+            {path: '/about', element: <AboutPage/>},
+            {path: '/contact', element: <ContactPage/>},
+            {path: '/form', element: <FormComponent/>},
         ],
     },
     {
-        element: <AuthLayout />,
+        element: <AuthLayout/>,
         children: [
-            { path: '/login', element: <Login /> },
-            { path: '/signup', element: <SignUp /> },
-            { path: '/forgot-password', element: <ForgotPassword /> },
+            {path: '/login', element: <Login/>},
+            {path: '/signup', element: <SignUp/>},
+            {path: '/forgot-password', element: <ForgotPassword/>},
         ],
     },
     {
@@ -78,7 +80,7 @@ const root = document.getElementById('root');
 ReactDOM.createRoot(root).render(
     <React.StrictMode>
         <Provider store={store}>
-            <RouterProvider router={router} />
+            <RouterProvider router={router}/>
         </Provider>
     </React.StrictMode>
 );
