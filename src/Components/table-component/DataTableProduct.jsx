@@ -31,18 +31,31 @@ const DataTableProduct = () => {
     };
 
     const columns = [
-        { header: 'ID', accessor: 'id' },
-        { header: 'Model', accessor: 'model' },
-        { header: 'Make', accessor: 'make' },
-        { header: 'Year', accessor: 'year' },
-        { header: 'Price', accessor: 'price' },
+        {
+            header: "Image",
+            accessor: "image",
+            render: (item) => (
+                <img
+                    src={item.image}
+                    alt={item.model || "product image"}
+                    className="w-16 h-10 object-cover rounded"
+                />
+            ),
+        },
+        { header: "ID", accessor: "id" },
+        { header: "Model", accessor: "model" },
+        { header: "Make", accessor: "make" },
+        { header: "Year", accessor: "year" },
+        { header: "Price", accessor: "price" },
     ];
+
+
 
     return (
         <div>
             <DataTable
                 columns={columns}
-                data={data?.cars || []}
+                data={data}
                 onEdit={handleEdit}
                 onDelete={handleDelete}
             />

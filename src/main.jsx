@@ -48,6 +48,7 @@ const router = createBrowserRouter([
             {path: '/contact', element: <ContactPage/>},
             {path: '/form', element: <AddFormProduct/>},
             {path: '/products/new', element: <AddFormProduct mode="create" />},
+            {path: '/products/:id/edit', element: <AddFormProduct mode="edit" />},
 
 
         ],

@@ -1,4 +1,5 @@
 import React from "react";
+
 const DataTable = ({ columns, data, onEdit, onDelete }) => {
     return (
         <div className="overflow-x-auto border rounded">
@@ -6,7 +7,10 @@ const DataTable = ({ columns, data, onEdit, onDelete }) => {
                 <thead className="bg-gray-100">
                 <tr>
                     {columns.map((col, idx) => (
-                        <th key={idx} className="text-left px-4 py-2 border-b font-medium">
+                        <th
+                            key={idx}
+                            className="text-left px-4 py-2 border-b font-medium"
+                        >
                             {col.header}
                         </th>
                     ))}
@@ -28,7 +32,9 @@ const DataTable = ({ columns, data, onEdit, onDelete }) => {
                         >
                             {columns.map((col, cIdx) => (
                                 <td key={cIdx} className="px-4 py-2 border-b">
-                                    {col.render ? col.render(item) : item[col.accessor]}
+                                    {col.render
+                                        ? col.render(item)
+                                        : item[col.accessor]}
                                 </td>
                             ))}
                             <td className="px-4 py-2 border-b space-x-2">
