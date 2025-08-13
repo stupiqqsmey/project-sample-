@@ -7,8 +7,8 @@ import store from '../src/redux/store.js';
 import './index.css';
 
 // Layouts
-import Navbar from './Components/Navbar-Footer/Navbar';
-import Footer from './Components/Navbar-Footer/Footer';
+import Navbar from './Components/Navbar-Footer/Navbar.jsx';
+import Footer from './Components/Navbar-Footer/Footer.jsx';
 import AuthLayout from './Components/layouts/AuthLayout';
 
 // Pages
