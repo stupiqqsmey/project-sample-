@@ -1,7 +1,7 @@
 // Components/DataTable/DataTableProduct.jsx
 import React, { useState } from 'react';
 import DataTable from './DataTable';
-import { useGetProductsQuery, useDeleteProductMutation } from '../../redux/api.js';
+import { useGetProductsQuery, useDeleteProductMutation } from '../../redux/features/car/car.js';
 import { useNavigate } from 'react-router-dom';
 
 const PRODUCTS_PER_PAGE = 10;

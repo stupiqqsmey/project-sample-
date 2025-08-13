@@ -1,26 +1,22 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { baseApi } from "../../baseApi.js";
 
 // Define the API slice
-export const ecommerceApi = createApi({
-    reducerPath: "ecommerceApi", // Unique key for reducer
-
-    baseQuery: fetchBaseQuery({
-        baseUrl: "https://car-nextjs-api.cheatdev.online/",
-    }),
-
+export const ecommerceApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
 
-        // GET
+        // GET all products
         getProducts: build.query({
             query: ({ page = 0, limit = 10 }) => `cars?skip=${page}&limit=${limit}`,
+            providesTags: ["Car"],
         }),
 
-        // GET cars by :id
+        // GET single product by ID
         getProductById: build.query({
             query: (id) => `cars/${id}`,
+            providesTags: (result, error, id) => [{ type: "Car", id }],
         }),
 
-        // POST /cars
+        // POST new product
         createProducts: build.mutation({
             query: ({ newCar, accessToken }) => ({
                 url: "cars",
@@ -31,9 +27,10 @@ export const ecommerceApi = createApi({
                 },
                 body: newCar,
             }),
+            invalidatesTags: ["Car"],
         }),
 
-        // PUT /cars/:id
+        // PUT update product
         updateProduct: build.mutation({
             query: ({ id, updatedCar, accessToken }) => ({
                 url: `cars/${id}`,
@@ -44,9 +41,10 @@ export const ecommerceApi = createApi({
                 },
                 body: updatedCar,
             }),
+            invalidatesTags: (result, error, { id }) => [{ type: "Car", id }],
         }),
 
-        // DELETE /cars/:id
+        // DELETE product
         deleteProduct: build.mutation({
             query: ({ id, accessToken }) => ({
                 url: `cars/${id}`,
@@ -55,11 +53,13 @@ export const ecommerceApi = createApi({
                     Authorization: `Bearer ${accessToken}`,
                 },
             }),
+            invalidatesTags: (result, error, { id }) => [{ type: "Car", id }],
         }),
+
     }),
 });
 
-// Export hooks for usage in components
+// Export hooks
 export const {
     useGetProductsQuery,
     useGetProductByIdQuery,

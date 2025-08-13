@@ -1,20 +1,26 @@
-// src/Components/FormCompponents/AddFormProduct.jsx
 import React, { useEffect, useState } from "react";
 import {
     useCreateProductsMutation,
     useUpdateProductMutation,
     useGetProductByIdQuery,
-} from "../../redux/api";
+} from "../../redux/features/car/car.js";
 import { useNavigate, useParams } from "react-router-dom";
 
 const AddFormProduct = ({ mode = "create" }) => {
     const { id } = useParams();
     const navigate = useNavigate();
+
     const [form, setForm] = useState({
         model: "",
         brand: "",
         year: "",
         price: "",
+        mileage: "",
+        description: "",
+        color: "",
+        fuel_type: "",
+        transmission: "",
+        image: "",
     });
 
     const { data: productData } = useGetProductByIdQuery(id, {
@@ -28,6 +34,12 @@ const AddFormProduct = ({ mode = "create" }) => {
                 brand: productData.brand || "",
                 year: productData.year || "",
                 price: productData.price || "",
+                mileage: productData.mileage || "",
+                description: productData.description || "",
+                color: productData.color || "",
+                fuel_type: productData.fuel_type || "",
+                transmission: productData.transmission || "",
+                image: productData.image || "",
             });
         }
     }, [mode, productData]);
@@ -42,72 +54,60 @@ const AddFormProduct = ({ mode = "create" }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const token = "your_token_here"; // Replace with your actual token
+
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJwb2RvMjE0NEBnbWFpbC5jb20iLCJleHAiOjE3NTQzNTYyOTQsInR5cGUiOiJhY2Nlc3MifQ.zqlgFJdYF1x3Th2yhN1Nhh-UEMIMEUxpLQA098Q5A98"; // Replace with dynamic token from Redux ideally
 
         try {
+            const payload = {
+                ...form,
+                year: Number(form.year),
+                price: Number(form.price),
+                mileage: Number(form.mileage),
+            };
+
             if (mode === "edit") {
-                await updateProduct({
-                    id,
-                    updatedCar: { ...form, year: Number(form.year), price: Number(form.price) },
-                    accessToken: token,
-                }).unwrap();
+                await updateProduct({ id, updatedCar: payload, accessToken: token }).unwrap();
                 alert("Product updated!");
             } else {
-                await createProduct({
-                    newCar: { ...form, year: Number(form.year), price: Number(form.price) },
-                    accessToken: token,
-                }).unwrap();
+                await createProduct({ newCar: payload, accessToken: token }).unwrap();
                 alert("Product created!");
             }
             navigate("/products");
         } catch (error) {
-            alert("Error: " + error.message);
+            alert("Error: " + (error?.data?.message || error.message));
         }
     };
 
     return (
-        <div className="max-w-md mx-auto bg-white p-6 rounded shadow">
+        <div className="max-w-xl mx-auto bg-white p-6 rounded shadow">
             <h2 className="text-xl font-bold mb-4">
                 {mode === "edit" ? "Edit Product" : "Add Product"}
             </h2>
 
             <form onSubmit={handleSubmit} className="space-y-4">
-                <input
-                    type="text"
-                    name="model"
-                    placeholder="Model"
-                    className="border p-2 rounded w-full"
-                    value={form.model}
-                    onChange={handleChange}
-                    required
-                />
-                <input
-                    type="text"
-                    name="brand"
-                    placeholder="Brand"
-                    className="border p-2 rounded w-full"
-                    value={form.brand}
-                    onChange={handleChange}
-                    required
-                />
-                <input
-                    type="number"
-                    name="year"
-                    placeholder="Year"
-                    className="border p-2 rounded w-full"
-                    value={form.year}
-                    onChange={handleChange}
-                    required
-                />
-                <input
-                    type="number"
-                    name="price"
-                    placeholder="Price"
-                    className="border p-2 rounded w-full"
-                    value={form.price}
-                    onChange={handleChange}
-                    required
-                />
+                {[
+                    { name: "model", placeholder: "Model" },
+                    { name: "brand", placeholder: "Brand" },
+                    { name: "year", placeholder: "Year", type: "number" },
+                    { name: "price", placeholder: "Price", type: "number" },
+                    { name: "mileage", placeholder: "Mileage", type: "number" },
+                    { name: "description", placeholder: "Description" },
+                    { name: "color", placeholder: "Color" },
+                    { name: "fuel_type", placeholder: "Fuel Type" },
+                    { name: "transmission", placeholder: "Transmission" },
+                    { name: "image", placeholder: "Image URL" },
+                ].map(({ name, placeholder, type = "text" }) => (
+                    <input
+                        key={name}
+                        type={type}
+                        name={name}
+                        placeholder={placeholder}
+                        className="border p-2 rounded w-full"
+                        value={form[name]}
+                        onChange={handleChange}
+                        required
+                    />
+                ))}
 
                 <button
                     type="submit"
